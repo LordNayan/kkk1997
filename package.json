@@ -1,0 +1,29 @@
+{
+  "name": "kkk1997",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "start:dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LordNayan/kkk1997.git"
+  },
+  "author": "Nayan Lakhwani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LordNayan/kkk1997/issues"
+  },
+  "homepage": "https://github.com/LordNayan/kkk1997#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  }
+}

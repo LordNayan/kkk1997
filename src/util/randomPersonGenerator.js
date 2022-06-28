@@ -18,7 +18,7 @@ function generateName(){
 
 function getImage(){
 	const number = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-	return `../images/${number}.jpg`;
+	return `./images/${number}.jpg`;
 }
 
 module.exports = {

@@ -19,11 +19,13 @@ module.exports = {
     c.id as CommentId,
     cc.id as ReplyId,
     c.content as CommentContent,
+    c.created_at as CommentCreatedAt,
     cc.content as ReplyContent,
     c.author as CommentAuthor,
     c.author_image as CommentAuthorImage,
     cc.author as ReplyAuthor,
     cc.author_image as ReplyAuthorImage,
+    cc.created_at as ReplyCreatedAt,
     (
     SELECT
         COUNT(u.comment_id)

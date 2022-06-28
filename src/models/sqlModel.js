@@ -60,7 +60,7 @@ module.exports = class DB {
                 }
 
                 try {
-                    console.log(connection.format(sql, values));
+                    // console.log(connection.format(sql, values));
                     const [articleRow, articleFields] = await connection.promise().query(sql, values);
                     resolve(articleRow);
                 } catch (error) {

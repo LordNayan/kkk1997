@@ -1,6 +1,6 @@
 module.exports = {
-    PORT:8080,
-    db:{
+    PORT: 8080,
+    db: {
         HOST: "localhost",
         USER: "root",
         PASSWORD: "",
@@ -14,5 +14,34 @@ module.exports = {
             }
         }
     },
-    allowedCommentTypes:["parent","child"],
-  };
+    allowedCommentTypes: ["parent", "child"],
+    getCommentsQuery: `select
+    c.id as CommentId,
+    cc.id as ReplyId,
+    c.content as CommentContent,
+    cc.content as ReplyContent,
+    c.author as CommentAuthor,
+    c.author_image as CommentAuthorImage,
+    cc.author as ReplyAuthor,
+    cc.author_image as ReplyAuthorImage,
+    (
+    SELECT
+        COUNT(u.comment_id)
+    FROM
+        ghost.upvotes u
+    WHERE
+        u.comment_id = c.id) as 'parentUpvotes',
+            (
+    SELECT
+        COUNT(u.child_comment_id)
+    FROM
+        ghost.upvotes u
+    WHERE
+        u.child_comment_id  = cc.id) as 'childUpvotes'
+from
+    ghost.comments c
+left join ghost.child_comments cc 
+on
+    c.id = cc.parent_id 
+order by c.created_at desc`
+};

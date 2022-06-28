@@ -4,10 +4,7 @@ const app = express();
 const config = require("./config/config");
 const indexRouter = require("./routes/index.router");
 const commentRouter = require("./routes/comments.router");
-const corsOptions = {
-  origin: "http://localhost:8081"
-};
-app.use(cors(corsOptions));
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded

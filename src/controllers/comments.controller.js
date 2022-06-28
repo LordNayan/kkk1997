@@ -1,39 +1,13 @@
 const dbAction = require("../models/sqlModel");
 const db = new dbAction();
-const { validationResult, body } = require('express-validator');
-const { generateName, getImage } = require("../util/randomPersonGenerator")
-const moment = require("moment")
-const uuid = require('uuid')
+const { validationResult } = require('express-validator');
+const { generateName, getImage } = require("../util/randomPersonGenerator");
+const {getCommentsQuery} = require("../config/config");
+const moment = require("moment");
+const uuid = require('uuid');
 module.exports = {
     getComments: async function (req, res) {
-        const result = await db.customSql(`select
-        c.id as CommentId,
-        cc.id as ReplyId,
-        c.content as CommentContent,
-        cc.content as ReplyContent,
-        c.author as CommentAuthor,
-        c.author_image as CommentAuthorImage,
-        cc.author as ReplyAuthor,
-        cc.author_image as ReplyAuthorImage,
-        (
-        SELECT
-            COUNT(u.comment_id)
-        FROM
-            ghost.upvotes u
-        WHERE
-            u.comment_id = c.id) as 'parentUpvotes',
-                (
-        SELECT
-            COUNT(u.child_comment_id)
-        FROM
-            ghost.upvotes u
-        WHERE
-            u.child_comment_id  = cc.id) as 'childUpvotes'
-    from
-        ghost.comments c
-    left join ghost.child_comments cc 
-    on
-        c.id = cc.parent_id `);
+        const result = await db.customSql(getCommentsQuery);
         let commentReplyMap = new Map();
         let comments = [];
         for (let res of result) {
@@ -69,7 +43,6 @@ module.exports = {
     },
     addComment: async function (req, res) {
         try {
-
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).send({ errors: errors.array() });
